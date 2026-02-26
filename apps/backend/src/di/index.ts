@@ -1,10 +1,9 @@
-import { Pool } from "pg"
-import { config } from "../config"
-import { PostgresqlUserRepository } from "../repositories/impementation/postgresql/PostgresqlUserRepository"
-import { AuthService } from "../services/AuthService"
-import { UserService } from "../services/UserService"
-import { BcryptPasswordHasher } from "../services/BcryptPasswordHasher"
-
+import { Pool } from 'pg'
+import { config } from '../config'
+import { PostgresqlUserRepository } from '../repositories/impementation/postgresql/PostgresqlUserRepository'
+import { AuthService } from '../services/AuthService'
+import { UserService } from '../services/UserService'
+import { BcryptPasswordHasher } from '../services/BcryptPasswordHasher'
 
 const postgrePool = new Pool({
   host: config.database.host,
@@ -12,7 +11,6 @@ const postgrePool = new Pool({
   user: config.database.user,
   database: config.database.name,
   password: config.database.password,
-
 })
 
 const passwordHasher = new BcryptPasswordHasher(config.bcrypt.saltRounds)

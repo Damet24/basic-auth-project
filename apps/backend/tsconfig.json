@@ -6,9 +6,7 @@
     "composite": true,
     "declaration": true
   },
-  "include": [
-    "src"
-  ],
+  "include": ["src"],
   "references": [
     {
       "path": "../../packages/domain"

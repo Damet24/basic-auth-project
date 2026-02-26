@@ -10,4 +10,3 @@ export * from './value-boject/Email'
 export * from './value-boject/IntValueObject'
 export * from './value-boject/StringValueObject'
 export * from './value-boject/Uuid'
-

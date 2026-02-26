@@ -11,7 +11,7 @@ import type { PasswordHasher } from './PasswordHasher'
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly passswordHasher: PasswordHasher
+    private readonly passswordHasher: PasswordHasher,
   ) {}
 
   async login({ email, password }: LoginRequest): Promise<Token | null> {
@@ -22,7 +22,7 @@ export class AuthService {
 
     if (!isPasswordValid) return null
 
-    // en algun momento se puede megrar esta funcionalidad a un JWTService, 
+    // en algun momento se puede megrar esta funcionalidad a un JWTService,
     // si se llega a necesitar, o si llegara a crecer
     const accessToken = jwt.sign(
       {

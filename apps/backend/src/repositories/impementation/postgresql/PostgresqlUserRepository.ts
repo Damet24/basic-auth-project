@@ -17,7 +17,7 @@ export class PostgresqlUserRepository implements UserRepository {
 
     if (result.rowCount === 0) return []
 
-    return result.rows.map(row => UserMapper.toDomain(row))
+    return result.rows.map((row) => UserMapper.toDomain(row))
   }
 
   async save(user: User): Promise<void> {
@@ -50,18 +50,18 @@ export class PostgresqlUserRepository implements UserRepository {
 
     return UserMapper.toDomain(result.rows[0]!)
   }
-  
+
   async findByEmail(email: string): Promise<User | null> {
     const query = `
     SELECT id, name, email, role, password_hash
     FROM users
     WHERE email = $1
     `
-    
+
     const result = await this.pool.query<UserRow>(query, [email])
-    
+
     if (result.rowCount === 0) return null
-    
+
     return UserMapper.toDomain(result.rows[0]!)
   }
 }

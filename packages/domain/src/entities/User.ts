@@ -24,7 +24,13 @@ export class User {
   }
 
   static fromPrimitives(id: string, name: string, email: string, role: string, passwordHash: string): User {
-    return new User(new UserId(id), new UserName(name), new UserEmail(email), UserRole.from(role), new PasswordHash(passwordHash))
+    return new User(
+      new UserId(id),
+      new UserName(name),
+      new UserEmail(email),
+      UserRole.from(role),
+      new PasswordHash(passwordHash),
+    )
   }
 
   toPrimitives(): { id: string; name: string; email: string; role: string; passwordHash: string | undefined } {
