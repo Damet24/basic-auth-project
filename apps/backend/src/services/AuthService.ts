@@ -22,6 +22,8 @@ export class AuthService {
 
     if (!isPasswordValid) return null
 
+    // en algun momento se puede megrar esta funcionalidad a un JWTService, 
+    // si se llega a necesitar, o si llegara a crecer
     const accessToken = jwt.sign(
       {
         sub: user.id.value,
