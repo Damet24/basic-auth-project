@@ -1,5 +1,13 @@
+import { RouterProvider } from "react-router";
+import { AppProviders } from "./contexts/AppContext";
+import { router } from "./routes";
+
 function App() {
-  return <h1 className="font-bold text-3xl">Hello World</h1>
+  return (
+    <AppProviders>
+      <RouterProvider router={router} />
+    </AppProviders>
+  );
 }
 
-export default App
+export default App;
