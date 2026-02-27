@@ -2,6 +2,7 @@ import type { Response, NextFunction } from 'express'
 import type { AuthenticatedRequest } from '../types/AuthenticatedRequest'
 import jwt from 'jsonwebtoken'
 import { config } from '../config'
+import { UserRole } from '@packages/domain/index'
 
 export function authenticate(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization
@@ -17,7 +18,7 @@ export function authenticate(req: AuthenticatedRequest, res: Response, next: Nex
 
     req.user = {
       userId: payload.sub,
-      role: payload.role,
+      role: UserRole.from(payload.role),
     }
 
     next()
