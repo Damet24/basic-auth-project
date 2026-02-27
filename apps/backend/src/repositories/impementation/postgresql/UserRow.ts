@@ -4,4 +4,5 @@ export interface UserRow {
   email: string
   role: string
   password_hash: string
+  deleted_at: string | null
 }

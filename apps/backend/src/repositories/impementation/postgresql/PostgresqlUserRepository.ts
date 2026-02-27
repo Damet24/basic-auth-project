@@ -9,6 +9,61 @@ import { NotFoundError } from '@packages/domain/errors/NotFoundError'
 export class PostgresqlUserRepository implements UserRepository {
   constructor(private pool: Pool) {}
 
+  async findByEmailIncludingDeleted(email: string): Promise<User | null> {
+    const query = `
+    SELECT 
+      u.id,
+      u.name,
+      u.email,
+      r.name AS role,
+      u.password_hash,
+      u.deleted_at
+    FROM users u
+    JOIN roles r ON r.id = u.role_id
+    WHERE u.email = $1
+  `
+
+    const result = await this.pool.query(query, [email])
+
+    if (result.rowCount === 0) return null
+
+    return UserMapper.toDomain(result.rows[0])
+  }
+
+  async restore(id: string): Promise<Result<boolean, NotFoundError>> {
+    const query = `
+    UPDATE users
+    SET deleted_at = NULL
+    WHERE id = $1
+    AND deleted_at IS NOT NULL
+  `
+
+    const result = await this.pool.query(query, [id])
+
+    if (result.rowCount === 0) {
+      return err(new NotFoundError('User not found or already active'))
+    }
+
+    return ok(true)
+  }
+
+  async updatePassword(id: string, passwordHash: string): Promise<Result<boolean, NotFoundError>> {
+    const query = `
+    UPDATE users
+    SET password_hash = $2
+    WHERE id = $1
+    AND deleted_at IS NULL
+  `
+
+    const result = await this.pool.query(query, [id, passwordHash])
+
+    if (result.rowCount === 0) {
+      return err(new NotFoundError('User not found'))
+    }
+
+    return ok(true)
+  }
+
   async findAll(): Promise<Result<User[], NotFoundError>> {
     const query = `
       SELECT 
@@ -64,11 +119,7 @@ export class PostgresqlUserRepository implements UserRepository {
       AND u.deleted_at IS NULL
     `
 
-    console.log(email)
-
     const result = await this.pool.query<UserRow>(query, [email])
-
-    console.log(result)
 
     if (result.rowCount === 0) {
       return err(new NotFoundError('User not found'))
@@ -98,20 +149,13 @@ export class PostgresqlUserRepository implements UserRepository {
         deleted_at = NULL
     `
 
-    await this.pool.query(query, [
-      row.id,
-      row.email,
-      row.name,
-      row.password_hash,
-      row.role,
-    ])
+    await this.pool.query(query, [row.id, row.email, row.name, row.password_hash, row.role])
   }
 
   async update(
     id: string,
-    data: Partial<{ name: string; email: string; role: string }>
+    data: Partial<{ name: string; email: string; role: string }>,
   ): Promise<Result<boolean, NotFoundError>> {
-
     const query = `
       UPDATE users
       SET
@@ -125,12 +169,7 @@ export class PostgresqlUserRepository implements UserRepository {
       AND deleted_at IS NULL
     `
 
-    const result = await this.pool.query(query, [
-      id,
-      data.name ?? null,
-      data.email ?? null,
-      data.role ?? null,
-    ])
+    const result = await this.pool.query(query, [id, data.name ?? null, data.email ?? null, data.role ?? null])
 
     if (result.rowCount === 0) {
       return err(new NotFoundError('User not found'))
