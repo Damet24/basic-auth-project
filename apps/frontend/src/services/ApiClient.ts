@@ -1,10 +1,7 @@
-import type { Token } from '@packages/contracts/index';
+import { API_URL, SESSION_KEY } from "../constants"
+import type { Session } from "../types"
 
 
-const API_URL = "http://localhost:8080"
-const SESSION_KEY = "session"
-
-export type Session = Token
 
 function getSession(): Session | null {
   const raw = localStorage.getItem(SESSION_KEY)
