@@ -13,6 +13,7 @@ const envSchema = z.object({
   JWT_EXPIRES_IN: z.coerce.number().default(3600),
   JWT_REFRESH_SECRET: z.string().min(32),
   BCRYPT_SALT_ROUNDS: z.coerce.number().default(10),
+  LOG_LEVEL : z.enum(['error', 'warn', 'info', 'debug']).default('info'),
 })
 
 export const env = envSchema.parse(process.env)

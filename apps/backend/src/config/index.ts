@@ -17,4 +17,7 @@ export const config = {
   bcrypt: {
     saltRounds: env.BCRYPT_SALT_ROUNDS,
   },
+  logging: {
+    level: env.LOG_LEVEL,
+  },
 }

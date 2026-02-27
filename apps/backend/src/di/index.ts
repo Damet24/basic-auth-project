@@ -4,6 +4,12 @@ import { PostgresqlUserRepository } from '../repositories/impementation/postgres
 import { AuthService } from '../services/AuthService'
 import { UserService } from '../services/UserService'
 import { BcryptPasswordHasher } from '../services/BcryptPasswordHasher'
+import pino from "pino"
+
+const logger = pino({
+  level: config.logging.level,
+  timestamp: pino.stdTimeFunctions.isoTime
+});
 
 const postgresPool = new Pool({
   host: config.database.host,
@@ -19,4 +25,4 @@ const userRepository = new PostgresqlUserRepository(postgresPool)
 const userService = new UserService(userRepository)
 const authService = new AuthService(userRepository, passwordHasher)
 
-export { userService, authService }
+export { userService, authService, logger }
