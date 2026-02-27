@@ -4,13 +4,13 @@ import { Topbar } from "./Topbar";
 
 export function DashboardLayout() {
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex transition-colors">
+    <div className="flex min-h-screen bg-gray-100 transition-colors dark:bg-gray-900">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex flex-1 flex-col">
         <Topbar />
 
-        <main className="p-6 flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto p-6">
           <Outlet />
         </main>
       </div>
