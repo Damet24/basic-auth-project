@@ -12,7 +12,7 @@ export class UserRole extends StringValueObject {
   }
 
   static from(value: string): UserRole {
-    if (!UserRole.VALUES.includes(value as any)) {
+    if (!UserRole.VALUES.includes(value as typeof UserRole.VALUES[number])) {
       throw new InvalidArgumentError('Invalid role')
     }
 
