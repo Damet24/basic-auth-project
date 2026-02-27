@@ -33,7 +33,7 @@ export class AuthService {
       { expiresIn: config.jwt.expiresIn },
     )
 
-    return { access_token: accessToken }
+    return { access_token: accessToken, expires_in: config.jwt.expiresIn }
   }
 
   async register({ email, name, password }: RegisterUserRequest): Promise<RegisterUserResponse> {
