@@ -84,6 +84,9 @@ importers:
       '@tanstack/react-query':
         specifier: 5.90.21
         version: 5.90.21(react@19.2.0)
+      lucide-react:
+        specifier: 0.575.0
+        version: 0.575.0(react@19.2.0)
       react:
         specifier: 19.2.0
         version: 19.2.0
@@ -1091,6 +1094,11 @@ packages:
 
   lodash@4.17.23:
     resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
+
+  lucide-react@0.575.0:
+    resolution: {integrity: sha512-VuXgKZrk0uiDlWjGGXmKV6MSk9Yy4l10qgVvzGn2AWBx1Ylt0iBexKOAoA6I7JO3m+M9oeovJd3yYENfkUbOeg==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -2239,6 +2247,10 @@ snapshots:
   lodash.once@4.1.1: {}
 
   lodash@4.17.23: {}
+
+  lucide-react@0.575.0(react@19.2.0):
+    dependencies:
+      react: 19.2.0
 
   magic-string@0.30.21:
     dependencies:
