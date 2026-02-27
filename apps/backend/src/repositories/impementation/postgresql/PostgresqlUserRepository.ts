@@ -3,11 +3,13 @@ import type { Pool } from 'pg'
 import type { UserRepository } from '../../UserRepository'
 import { UserMapper } from './UserMapper'
 import type { UserRow } from './UserRow'
+import { err, ok, type Result } from '@packages/domain/shared/Result'
+import { NotFoundError } from '@packages/domain/errors/NotFoundError'
 
 export class PostgresqlUserRepository implements UserRepository {
   constructor(private pool: Pool) {}
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<Result<User[], NotFoundError>> {
     const query = `
       SELECT id, name, email, role, password_hash
       FROM users
@@ -15,9 +17,9 @@ export class PostgresqlUserRepository implements UserRepository {
 
     const result = await this.pool.query<UserRow>(query)
 
-    if (result.rowCount === 0) return []
+    if (result.rowCount === 0) return err(new NotFoundError())
 
-    return result.rows.map((row) => UserMapper.toDomain(row))
+    return ok(result.rows.map((row) => UserMapper.toDomain(row)))
   }
 
   async save(user: User): Promise<void> {
@@ -37,7 +39,7 @@ export class PostgresqlUserRepository implements UserRepository {
     await this.pool.query(query, [row.id, row.email, row.name, row.password_hash, row.role])
   }
 
-  async findById(id: string): Promise<User | null> {
+  async findById(id: string): Promise<Result<User, NotFoundError>> {
     const query = `
       SELECT id, name, email, role, password_hash
       FROM users
@@ -46,12 +48,12 @@ export class PostgresqlUserRepository implements UserRepository {
 
     const result = await this.pool.query<UserRow>(query, [id])
 
-    if (result.rowCount === 0) return null
+    if (result.rowCount === 0) return  err(new NotFoundError('User not found'))
 
-    return UserMapper.toDomain(result.rows[0]!)
+    return ok(UserMapper.toDomain(result.rows[0]!))
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string): Promise<Result<User, NotFoundError>> {
     const query = `
     SELECT id, name, email, role, password_hash
     FROM users
@@ -60,8 +62,23 @@ export class PostgresqlUserRepository implements UserRepository {
 
     const result = await this.pool.query<UserRow>(query, [email])
 
-    if (result.rowCount === 0) return null
+    if (result.rowCount === 0) return err(new NotFoundError('User not found'))
 
-    return UserMapper.toDomain(result.rows[0]!)
+    return ok(UserMapper.toDomain(result.rows[0]!))
+  }
+
+  async remove(id: string): Promise<Result<boolean, NotFoundError>> {
+    const query = `
+    DELETE FROM users
+    WHERE id = $1
+  `
+
+    const result = await this.pool.query(query, [id])
+
+    if (result.rowCount === 0) {
+      return err(new NotFoundError('User not found'))
+    }
+
+    return ok(true)
   }
 }
