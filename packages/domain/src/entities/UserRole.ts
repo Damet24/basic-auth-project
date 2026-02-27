@@ -2,6 +2,8 @@ import { InvalidArgumentError } from '../errors/InvalidArgumentError'
 import { StringValueObject } from '../value-boject/StringValueObject'
 
 export class UserRole extends StringValueObject {
+  private static readonly VALUES = ['ADMIN', 'USER'] as const
+
   static readonly ADMIN = new UserRole('ADMIN')
   static readonly USER = new UserRole('USER')
 
@@ -10,13 +12,22 @@ export class UserRole extends StringValueObject {
   }
 
   static from(value: string): UserRole {
-    switch (value) {
-      case 'ADMIN':
-        return UserRole.ADMIN
-      case 'USER':
-        return UserRole.USER
-      default:
-        throw new InvalidArgumentError('Invalid role')
+    if (!UserRole.VALUES.includes(value as any)) {
+      throw new InvalidArgumentError('Invalid role')
     }
+
+    return value === 'ADMIN' ? UserRole.ADMIN : UserRole.USER
+  }
+
+  static values(): readonly string[] {
+    return UserRole.VALUES
+  }
+
+  isAdmin(): boolean {
+    return this.equals(UserRole.ADMIN)
+  }
+
+  isUser(): boolean {
+    return this.equals(UserRole.USER)
   }
 }
