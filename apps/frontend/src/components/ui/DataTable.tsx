@@ -23,8 +23,8 @@ export function DataTable<T>({ data, columns, loading, emptyMessage = 'No data a
       <table className="min-w-full text-sm">
         <thead className="bg-gray-50 dark:bg-gray-700">
           <tr>
-            {columns.map((col, index) => (
-              <th key={index} className="px-6 py-3 text-left font-semibold text-gray-700 dark:text-gray-200">
+            {columns.map((col) => (
+              <th key={col.header} className="px-6 py-3 text-left font-semibold text-gray-700 dark:text-gray-200">
                 {col.header}
               </th>
             ))}
@@ -45,11 +45,11 @@ export function DataTable<T>({ data, columns, loading, emptyMessage = 'No data a
               key={rowIndex}
               className="border-gray-200 border-t transition hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700"
             >
-              {columns.map((col, colIndex) => {
+              {columns.map((col) => {
                 const value = row[col.accessor]
 
                 return (
-                  <td key={colIndex} className="px-6 py-4 text-gray-700 dark:text-gray-200">
+                  <td key={col.header} className="px-6 py-4 text-gray-700 dark:text-gray-200">
                     {col.render ? col.render(value, row) : String(value)}
                   </td>
                 )
