@@ -4,6 +4,7 @@ import httpStatus from 'http-status'
 import { userService } from '../di'
 import type { AuthenticatedRequest } from '../types/AuthenticatedRequest'
 import { DeleteUserRequestSchema } from '@packages/contracts/dtos/requests/DeleteUserRequest'
+import { UpdateUserRequestSchema } from '@packages/contracts/dtos/requests/UpdateUserRequest'
 
 export class UserController {
   async index(req: AuthenticatedRequest, res: Response) {
@@ -46,7 +47,31 @@ export class UserController {
       return res.status(httpStatus.BAD_REQUEST).json({ error: parsed.error })
     }
 
-    await userService.delete(new UserId(parsed.data?.id))
-    return res.status(httpStatus.OK).send('user deleted')
+    const result = await userService.delete(new UserId(parsed.data?.id))
+    result.match({
+      ok: () => res.status(httpStatus.OK).send('User deleted'),
+      err(error) {
+        return res.status(httpStatus.BAD_REQUEST).send(error.message)
+      },
+    })
+  }
+
+  async update(req: AuthenticatedRequest, res: Response) {
+    if (!req.user) {
+      return res.status(httpStatus.BAD_REQUEST).json({ error: 'User not authenticated' })
+    }
+
+    const parsed = UpdateUserRequestSchema.safeParse(req.body)
+    if (!parsed.success) {
+      return res.status(httpStatus.BAD_REQUEST).json({ error: parsed.error })
+    }
+
+    const result = await userService.edit(parsed.data)
+    result.match({
+      ok: () => res.status(httpStatus.OK).send('User updated'),
+      err(error) {
+        return res.status(httpStatus.BAD_REQUEST).send(error.message)
+      },
+    })
   }
 }
