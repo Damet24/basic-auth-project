@@ -10,6 +10,8 @@
     "includes": [
       "**/*.ts",
       "**/*.js",
+      "**/*.jsx",
+      "**/*.tsx",
       "**/*.json",
       "**/*.jsonc",
       "!**/node_modules",
