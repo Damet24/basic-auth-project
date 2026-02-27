@@ -1,10 +1,10 @@
-import UserService from '../../services/UserService'
 import { ProfileCard } from '../../components/profile/ProfileCard'
 import { ProfileSkeleton } from '../../components/profile/ProfileSkeleton'
 import { Container } from '../../components/ui/Container'
+import { useCurrentUser } from '../../hooks/useUser'
 
 export function ProfilePage() {
-  const { data, isLoading } = UserService.getUserInfo()
+  const { data, isLoading } = useCurrentUser()
 
   return (
     <Container>
