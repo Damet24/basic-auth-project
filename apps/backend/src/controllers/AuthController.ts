@@ -19,11 +19,12 @@ export class AuthController {
       return res.status(400).json({ error: parsed.error })
     }
 
-    const resutl = await authService.register({
-      email: parsed.data.email,
-      name: parsed.data.name,
-      password: parsed.data.password,
-    })
-    return res.json(resutl)
+    return res.json(
+      await authService.register({
+        email: parsed.data.email,
+        name: parsed.data.name,
+        password: parsed.data.password,
+      }),
+    )
   }
 }

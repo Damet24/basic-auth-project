@@ -1,5 +1,5 @@
-import type { UserRepository } from '../repositories/UserRepository'
 import { InvalidArgumentError } from '@packages/domain/errors/InvalidArgumentError'
+import type { UserRepository } from '../repositories/UserRepository'
 
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
