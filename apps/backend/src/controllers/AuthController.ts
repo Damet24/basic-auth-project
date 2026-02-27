@@ -1,6 +1,7 @@
 import { LoginRequestSchema } from '@packages/contracts/dtos/requests/LoginRequest'
 import type { Request, Response } from 'express'
 import { authService } from '../di'
+import httpStatus from 'http-status'
 import { RegisterUserRequestSchema } from '@packages/contracts/index'
 
 export class AuthController {
@@ -10,7 +11,7 @@ export class AuthController {
       return res.status(400).json({ error: parsed.error })
     }
     const result = await authService.login({ email: parsed.data.email, password: parsed.data.password })
-    return res.json(result)
+    return res.status(httpStatus.OK).json(result)
   }
 
   async register(req: Request, res: Response) {
@@ -19,7 +20,7 @@ export class AuthController {
       return res.status(400).json({ error: parsed.error })
     }
 
-    return res.json(
+    return res.status(httpStatus.CREATED).json(
       await authService.register({
         email: parsed.data.email,
         name: parsed.data.name,
