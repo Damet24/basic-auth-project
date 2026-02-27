@@ -19,7 +19,7 @@
     "baseUrl": ".",
     "paths": {
       "@packages/domain/*": ["packages/domain/src/*"],
-      "@packages/contracts/*": ["packages/contracts/src/*"],
-    },
+      "@packages/contracts/*": ["packages/contracts/src/*"]
+    }
   },
 }
