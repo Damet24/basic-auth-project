@@ -9,6 +9,15 @@ const getUserInfo = () => {
   })
 }
 
+
+const getUsers = () => {
+  return useQuery<UserInfoResponse[]>({
+    queryKey: ['users'],
+    queryFn: () => apiFetch('/api/users'),
+  })
+}
+
 export default {
-    getUserInfo
+    getUserInfo,
+    getUsers
 }
