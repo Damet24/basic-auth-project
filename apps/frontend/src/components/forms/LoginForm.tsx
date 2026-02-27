@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
-import { Input } from "../ui/Input";
-import { Button } from "../ui/Button";
-import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../contexts/AuthContext";
+import { Button } from "../ui/Button";
+import { Input } from "../ui/Input";
 
 type LoginFormValues = {
   email: string;
@@ -34,6 +34,7 @@ export function LoginForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <Input
+        inputId="email"
         label="Email"
         type="email"
         {...register("email", {
@@ -43,6 +44,7 @@ export function LoginForm() {
       />
 
       <Input
+        inputId="password"
         label="Password"
         type="password"
         {...register("password", {
@@ -52,7 +54,7 @@ export function LoginForm() {
       />
 
       {errors.root && (
-        <div className="text-red-500 text-sm text-center">
+        <div className="text-center text-red-500 text-sm">
           {errors.root.message}
         </div>
       )}
