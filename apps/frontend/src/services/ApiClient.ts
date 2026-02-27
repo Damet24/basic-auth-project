@@ -18,20 +18,22 @@ export function clearSession() {
 export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const session = getSession()
 
+  const headers: HeadersInit = {
+    ...(options.body && { 'Content-Type': 'application/json' }),
+    ...(session?.access_token && {
+      Authorization: `Bearer ${session.access_token}`,
+    }),
+    ...options.headers,
+  }
+
   const response = await fetch(`${API_URL}${endpoint}`, {
     ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(session?.access_token && {
-        Authorization: `Bearer ${session.access_token}`,
-      }),
-      ...options.headers,
-    },
+    headers,
   })
 
   if (response.status === 401) {
     clearSession()
-    throw new Error('Session expired. Please log in again.')
+    throw new Error('Session expired')
   }
 
   if (!response.ok) {
