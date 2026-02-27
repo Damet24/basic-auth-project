@@ -1,21 +1,20 @@
-import { DashboardLayout } from '../../components/layout/DashboardLayout'
 import { Badge } from '../../components/ui/Badge'
 
 export function DashboardPage() {
   return (
     <>
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Dashboard</h1>
+      <h1 className="mb-6 font-bold text-2xl text-gray-900 dark:text-white">Dashboard</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
-          <h2 className="text-lg font-semibold mb-2">Users</h2>
-          <p className="text-3xl font-bold">120</p>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="rounded-xl bg-white p-6 shadow dark:bg-gray-800">
+          <h2 className="mb-2 font-semibold text-lg">Users</h2>
+          <p className="font-bold text-3xl">120</p>
           <Badge variant="success">+5%</Badge>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
-          <h2 className="text-lg font-semibold mb-2">Active</h2>
-          <p className="text-3xl font-bold">87</p>
+        <div className="rounded-xl bg-white p-6 shadow dark:bg-gray-800">
+          <h2 className="mb-2 font-semibold text-lg">Active</h2>
+          <p className="font-bold text-3xl">87</p>
           <Badge variant="default">Stable</Badge>
         </div>
       </div>
