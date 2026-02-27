@@ -35,23 +35,38 @@ export class AuthService {
   }
 
   async register({ email, name, password }: RegisterUserRequest): Promise<Result<RegisterUserResponse, Error>> {
-    const result = await this.userRepository.findByEmail(email)
-    if (result.isErr()) return err(new Error('User already exists'))
+    const existing = await this.userRepository.findByEmailIncludingDeleted(email)
 
     const plainPassword = PlainPassword.create(password)
-    if (plainPassword.isErr()) {
-      return err(plainPassword.error)
-    }
+    if (plainPassword.isErr()) return err(plainPassword.error)
+
     const hashed = await this.passswordHasher.hash(plainPassword.value.value)
     const passwordHash = new PasswordHash(hashed)
 
-    const user = User.create(UserId.random(), new UserName(name), new UserEmail(email), UserRole.USER, passwordHash)
-    await this.userRepository.save(user)
+    if (existing) {
+      if (!existing.isDeleted()) {
+        return err(new Error('Email already registered'))
+      }
+
+      await this.userRepository.restore(existing.id.value)
+      await this.userRepository.updatePassword(existing.id.value, passwordHash.value)
+
+      return ok({
+        id: existing.id.value,
+        name: existing.name.value,
+        email: existing.email.value,
+        role: existing.role.value,
+      })
+    }
+
+    const newUser = User.create(UserId.random(), new UserName(name), new UserEmail(email), UserRole.USER, passwordHash)
+    await this.userRepository.save(newUser)
+
     return ok({
-      id: user.id.value,
-      name: user.name.value,
-      email: user.email.value,
-      role: user.role.value,
+      id: newUser.id.value,
+      name: newUser.name.value,
+      email: newUser.email.value,
+      role: newUser.role.value,
     })
   }
 }
