@@ -13,7 +13,7 @@ export class UserMapper {
       email: user.email.value,
       role: user.role.value,
       password_hash: user.passwordHash.value,
-      deleted_at: user.deletedAt?.toISOString() ?? null
+      deleted_at: user.deletedAt?.toISOString() ?? null,
     }
   }
 }

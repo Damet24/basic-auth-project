@@ -1,9 +1,9 @@
-import { UpdateUserRequest } from '@packages/contracts/dtos/requests/UpdateUserRequest'
-import type { UserRepository } from '../repositories/UserRepository'
+import type { UpdateUserRequest } from '@packages/contracts/dtos/requests/UpdateUserRequest'
 import type { UserInfoResponse } from '@packages/contracts/dtos/responses/UserInfoResponse'
-import type { User, UserId } from '@packages/domain/index'
-import { ok, err, type Result } from '@packages/domain/shared/Result'
 import { NotFoundError } from '@packages/domain/errors/NotFoundError'
+import type { UserId } from '@packages/domain/index'
+import { err, ok, type Result } from '@packages/domain/shared/Result'
+import type { UserRepository } from '../repositories/UserRepository'
 
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}

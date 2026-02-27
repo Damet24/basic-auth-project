@@ -16,8 +16,5 @@ export interface UserRepository {
 
   restore(id: string): Promise<Result<boolean, NotFoundError>>
 
-  updatePassword(
-    id: string,
-    passwordHash: string
-  ): Promise<Result<boolean, NotFoundError>>
+  updatePassword(id: string, passwordHash: string): Promise<Result<boolean, NotFoundError>>
 }
