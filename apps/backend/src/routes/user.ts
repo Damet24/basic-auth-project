@@ -10,5 +10,6 @@ const userController = new UserController()
 
 userRouter.get('/', authenticate, authorize(UserRole.ADMIN), userController.index.bind(userController))
 userRouter.get('/me', authenticate, userController.me.bind(userController))
+userRouter.delete('/:id', authenticate, authorize(UserRole.ADMIN), userController.delete.bind(userController))
 
 export default userRouter as Router
