@@ -7,14 +7,13 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
 
-  const login = async (email: string, password: string, clientId: string) => {
+  const login = async (email: string, password: string) => {
     const response = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email,
         password,
-        client_id: clientId,
       }),
     });
 
