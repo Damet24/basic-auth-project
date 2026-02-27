@@ -10,7 +10,7 @@ export function IndexPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/dashboard')
+      navigate('/home')
     }
   }, [isAuthenticated, navigate])
 
