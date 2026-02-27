@@ -1,9 +1,9 @@
 import { Badge } from '../../components/ui/Badge'
 import { DataTable, type Column } from '../../components/ui/DataTable'
-import UserService from '../../services/UserService'
+import { useUsers } from '../../hooks/useUser'
 
 export function UsersPage() {
-  const { data = [], isLoading } = UserService.getUsers()
+  const { data = [], isLoading } = useUsers()
 
   const columns: Column<any>[] = [
     {
@@ -18,6 +18,11 @@ export function UsersPage() {
       header: 'Role',
       accessor: 'role',
       render: (value) => <Badge variant={value === 'admin' ? 'danger' : 'default'}>{value.toUpperCase()}</Badge>,
+    },
+    {
+      header: 'Accionts',
+      accessor: '',
+      render: () => <h1>uwu</h1>,
     },
   ]
 
