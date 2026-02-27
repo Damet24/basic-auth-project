@@ -1,11 +1,11 @@
 type CardProps = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 export function Card({ children }: CardProps) {
   return (
-    <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8 w-full max-w-md transition-colors">
+    <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg transition-colors dark:bg-gray-800">
       {children}
     </div>
-  );
+  )
 }
