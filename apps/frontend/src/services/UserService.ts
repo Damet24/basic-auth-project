@@ -9,7 +9,6 @@ const getUserInfo = () => {
   })
 }
 
-
 const getUsers = () => {
   return useQuery<UserInfoResponse[]>({
     queryKey: ['users'],
@@ -18,6 +17,6 @@ const getUsers = () => {
 }
 
 export default {
-    getUserInfo,
-    getUsers
+  getUserInfo,
+  getUsers,
 }

@@ -1,16 +1,16 @@
-import { Navigate } from "react-router";
-import { useAuth } from "../../contexts/AuthContext";
+import { Navigate } from 'react-router'
+import { useAuth } from '../../contexts/AuthContext'
 
 type Props = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 export function ProtectedRoute({ children }: Props) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth()
 
   if (!isAuthenticated) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/" replace />
   }
 
-  return <>{children}</>;
+  return <>{children}</>
 }

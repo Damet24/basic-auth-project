@@ -1,23 +1,22 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter } from 'react-router'
 
-import { IndexPage } from "../pages/IndexPage";
+import { IndexPage } from '../pages/IndexPage'
 
-import { DashboardLayout } from "../components/layout/DashboardLayout";
+import { DashboardLayout } from '../components/layout/DashboardLayout'
 
-
-import { ProtectedRoute } from "../components/auth/ProtectedRoute";
-import { DashboardPage } from "../pages/dashboard/DashboardPage";
-import { ProfilePage } from "../pages/dashboard/ProfilePage";
-import { UsersPage } from "../pages/dashboard/UsersPage";
+import { ProtectedRoute } from '../components/auth/ProtectedRoute'
+import { DashboardPage } from '../pages/dashboard/DashboardPage'
+import { ProfilePage } from '../pages/dashboard/ProfilePage'
+import { UsersPage } from '../pages/dashboard/UsersPage'
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <IndexPage />,
   },
 
   {
-    path: "/dashboard",
+    path: '/dashboard',
     element: (
       <ProtectedRoute>
         <DashboardLayout />
@@ -29,13 +28,13 @@ export const router = createBrowserRouter([
         element: <DashboardPage />,
       },
       {
-        path: "profile",
+        path: 'profile',
         element: <ProfilePage />,
       },
       {
-        path: "users",
+        path: 'users',
         element: <UsersPage />,
       },
     ],
   },
-]);
+])

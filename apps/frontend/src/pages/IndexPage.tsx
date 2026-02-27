@@ -15,15 +15,9 @@ export function IndexPage() {
   }, [isAuthenticated, navigate])
 
   return (
-    <div
-      className="flex min-h-screen items-center justify-center bg-gray-100 transition-colors dark:bg-gray-900"
-    >
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 transition-colors dark:bg-gray-900">
       <Card>
-        <h1
-          className="mb-6 text-center font-bold text-3xl text-gray-900 dark:text-white"
-        >
-          Login
-        </h1>
+        <h1 className="mb-6 text-center font-bold text-3xl text-gray-900 dark:text-white">Login</h1>
 
         <LoginForm />
       </Card>

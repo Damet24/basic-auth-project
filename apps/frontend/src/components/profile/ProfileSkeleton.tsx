@@ -1,7 +1,6 @@
 export function ProfileSkeleton() {
   return (
     <div className="animate-pulse rounded-2xl bg-white p-8 shadow-md dark:bg-gray-800">
-
       <div className="flex items-center gap-6">
         <div className="h-20 w-20 rounded-full bg-gray-300 dark:bg-gray-700" />
         <div className="space-y-3">
@@ -18,5 +17,5 @@ export function ProfileSkeleton() {
         <div className="h-12 rounded bg-gray-300 dark:bg-gray-700" />
       </div>
     </div>
-  );
+  )
 }

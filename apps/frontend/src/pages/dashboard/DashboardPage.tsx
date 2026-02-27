@@ -1,12 +1,10 @@
-import { DashboardLayout } from "../../components/layout/DashboardLayout";
-import { Badge } from "../../components/ui/Badge";
+import { DashboardLayout } from '../../components/layout/DashboardLayout'
+import { Badge } from '../../components/ui/Badge'
 
 export function DashboardPage() {
   return (
     <>
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-        Dashboard
-      </h1>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Dashboard</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
@@ -22,5 +20,5 @@ export function DashboardPage() {
         </div>
       </div>
     </>
-  );
+  )
 }
