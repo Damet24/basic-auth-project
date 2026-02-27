@@ -1,3 +1,4 @@
+import { nameInitials } from '../../lib/initials'
 import { Badge } from '../ui/Badge'
 
 type Props = {
@@ -8,11 +9,7 @@ type Props = {
 }
 
 export function ProfileCard({ id, name = '', email, role = '' }: Props) {
-  const initials = (name || '')
-    .split(' ')
-    .map((n) => n[0] || '')
-    .join('')
-    .toUpperCase()
+  const initials = nameInitials(name)
 
   const roleVariant = role === 'admin' ? 'danger' : 'default'
 
