@@ -6,6 +6,7 @@ import authRouter from './routes/auth'
 import httpStatus from 'http-status'
 import loggerHttp from 'pino-http'
 import { logger } from './di'
+import cors from 'cors'
 
 const app = express()
 
@@ -16,6 +17,7 @@ app.use(helmet.xssFilter())
 app.use(helmet.noSniff())
 app.use(helmet.hidePoweredBy())
 app.use(helmet.frameguard({ action: 'deny' }))
+app.use(cors())
 
 app.use('/api/auth', authRouter)
 app.use('/api/users', userRouter)
