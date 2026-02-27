@@ -8,7 +8,7 @@ const userRouter = Router()
 
 const userController = new UserController()
 
-userRouter.get('/', userController.index.bind(userController))
-userRouter.get('/me', authenticate, authorize(UserRole.ADMIN), userController.me.bind(userController))
+userRouter.get('/', authenticate, authorize(UserRole.ADMIN), userController.index.bind(userController))
+userRouter.get('/me', authenticate, userController.me.bind(userController))
 
 export default userRouter as Router
