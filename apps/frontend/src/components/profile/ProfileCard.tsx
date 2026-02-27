@@ -2,15 +2,15 @@ import { Badge } from "../ui/Badge";
 
 type Props = {
   id: string;
-  name: string;
+  name?: string;
   email: string;
-  role: string;
+  role?: string;
 };
 
-export function ProfileCard({ id, name, email, role }: Props) {
-  const initials = name
+export function ProfileCard({ id, name = "", email, role = "" }: Props) {
+  const initials = (name || "")
     .split(" ")
-    .map((n) => n[0])
+    .map((n) => n[0] || "")
     .join("")
     .toUpperCase();
 
@@ -18,21 +18,16 @@ export function ProfileCard({ id, name, email, role }: Props) {
     role === "admin" ? "danger" : "default";
 
   return (
-    <div className="bg-white dark:bg-gray-800 
-    rounded-2xl shadow-md p-8 transition-colors">
+    <div className="rounded-2xl bg-white p-8 shadow-md transition-colors dark:bg-gray-800">
 
       <div className="flex items-center gap-6">
         
-        {/* Avatar */}
-        <div className="w-20 h-20 rounded-full bg-blue-600 
-        text-white flex items-center justify-center 
-        text-2xl font-bold">
+        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-600 font-bold text-2xl text-white">
           {initials}
         </div>
 
         <div>
-          <h2 className="text-2xl font-bold 
-          text-gray-900 dark:text-white">
+          <h2 className="font-bold text-2xl text-gray-900 dark:text-white">
             {name}
           </h2>
 
@@ -42,18 +37,15 @@ export function ProfileCard({ id, name, email, role }: Props) {
 
           <div className="mt-2">
             <Badge variant={roleVariant}>
-              {role.toUpperCase()}
+              {role ? role.toUpperCase() : "UNKNOWN"}
             </Badge>
           </div>
         </div>
       </div>
 
-      {/* Divider */}
-      <div className="border-t border-gray-200 
-      dark:border-gray-700 my-6" />
+      <div className="my-6 border-gray-200 border-t dark:border-gray-700" />
 
-      {/* Info Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+      <div className="grid grid-cols-1 gap-4 text-sm md:grid-cols-2">
         <div>
           <p className="text-gray-500 dark:text-gray-400">User ID</p>
           <p className="font-medium text-gray-800 dark:text-gray-200">
