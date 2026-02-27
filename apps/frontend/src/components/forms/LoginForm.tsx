@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router'
-import { useAuth } from '../../contexts/AuthContext'
+import { useLogin } from '../../hooks/useLogin'
 import { Button } from '../ui/Button'
 import { Input } from '../ui/Input'
 
@@ -10,24 +10,23 @@ type LoginFormValues = {
 }
 
 export function LoginForm() {
-  const { login } = useAuth()
   const navigate = useNavigate()
+  const { mutateAsync, isPending } = useLogin()
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     setError,
   } = useForm<LoginFormValues>()
 
   async function onSubmit(data: LoginFormValues) {
     try {
-      await login(data.email, data.password)
-      navigate('/dashboard')
-    } catch {
-      setError('root', {
-        message: 'Invalid email or password',
-      })
+      await mutateAsync(data)
+
+      navigate('/home')
+    } catch (error: any) {
+      setError('root', { message: error.message })
     }
   }
 
@@ -55,8 +54,8 @@ export function LoginForm() {
 
       {errors.root && <div className="text-center text-red-500 text-sm">{errors.root.message}</div>}
 
-      <Button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? 'Logging in...' : 'Login'}
+      <Button type="submit" disabled={isPending}>
+        {isPending ? 'Logging in...' : 'Login'}
       </Button>
     </form>
   )
