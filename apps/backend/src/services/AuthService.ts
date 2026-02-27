@@ -15,9 +15,8 @@ export class AuthService {
   ) {}
 
   async login({ email, password }: LoginRequest): Promise<Result<Token, Error>> {
-    const result = await this.userRepository.findByEmail(email)
-    if (result.isErr()) return err(new Error('Invalid credentials'))
-    const user = result.unwrap()
+    const user = await this.userRepository.findByEmail(email)
+    if (!user) return err(new Error('Invalid credentials'))
     const isPasswordValid = await this.passswordHasher.compare(password, user.passwordHash.value)
     if (!isPasswordValid) return err(new Error('Invalid credentials'))
     // en algun momento se puede megrar esta funcionalidad a un JWTService,

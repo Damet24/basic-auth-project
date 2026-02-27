@@ -64,7 +64,7 @@ export class PostgresqlUserRepository implements UserRepository {
     return ok(true)
   }
 
-  async findAll(): Promise<Result<User[], NotFoundError>> {
+  async findAll(): Promise<User[]> {
     const query = `
       SELECT 
         u.id,
@@ -79,10 +79,10 @@ export class PostgresqlUserRepository implements UserRepository {
 
     const result = await this.pool.query<UserRow>(query)
 
-    return ok(result.rows.map(UserMapper.toDomain))
+    return result.rows.map(UserMapper.toDomain)
   }
 
-  async findById(id: string): Promise<Result<User, NotFoundError>> {
+  async findById(id: string): Promise<User | null> {
     const query = `
       SELECT 
         u.id,
@@ -99,13 +99,13 @@ export class PostgresqlUserRepository implements UserRepository {
     const result = await this.pool.query<UserRow>(query, [id])
 
     if (result.rowCount === 0) {
-      return err(new NotFoundError('User not found'))
+      return null
     }
 
-    return ok(UserMapper.toDomain(result.rows[0]!))
+    return UserMapper.toDomain(result.rows[0]!)
   }
 
-  async findByEmail(email: string): Promise<Result<User, NotFoundError>> {
+  async findByEmail(email: string): Promise<User | null> {
     const query = `
       SELECT 
         u.id,
@@ -122,10 +122,10 @@ export class PostgresqlUserRepository implements UserRepository {
     const result = await this.pool.query<UserRow>(query, [email])
 
     if (result.rowCount === 0) {
-      return err(new NotFoundError('User not found'))
+      return null
     }
 
-    return ok(UserMapper.toDomain(result.rows[0]!))
+    return UserMapper.toDomain(result.rows[0]!)
   }
 
   async save(user: User): Promise<void> {

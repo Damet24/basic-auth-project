@@ -5,9 +5,9 @@ import type { Result } from '@packages/domain/shared/Result'
 export interface UserRepository {
   remove(id: string): Promise<Result<boolean, NotFoundError>>
   save(user: User): Promise<void>
-  findById(id: string): Promise<Result<User, NotFoundError>>
-  findByEmail(email: string): Promise<Result<User, NotFoundError>>
-  findAll(): Promise<Result<User[], NotFoundError>>
+  findById(id: string): Promise<User | null>
+  findByEmail(email: string): Promise<User | null>
+  findAll(): Promise<User[]>
   update(
     id: string,
     data: Partial<{ name: string; email: string; role: string }>,
