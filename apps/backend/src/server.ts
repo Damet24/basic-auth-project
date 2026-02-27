@@ -1,11 +1,15 @@
-import express from 'express'
+import express,  { type NextFunction,type Request,type Response } from 'express'
 import helmet from 'helmet'
 import { config } from './config'
 import userRouter from './routes/user'
 import authRouter from './routes/auth'
+import httpStatus from 'http-status'
+import loggerHttp from 'pino-http'
+import { logger } from './di'
 
 const app = express()
 
+app.use(loggerHttp())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(helmet.xssFilter())
@@ -16,6 +20,11 @@ app.use(helmet.frameguard({ action: 'deny' }))
 app.use('/api/auth', authRouter)
 app.use('/api/users', userRouter)
 
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  logger.error(err.stack)
+  res.status(httpStatus.INTERNAL_SERVER_ERROR).send("Internal Server Error");
+})
+
 app.listen(config.port, () => {
-  console.log(`Server is running on port ${config.port}`)
+  logger.info(`Server is running on port ${config.port}`)
 })
