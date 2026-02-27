@@ -1,4 +1,4 @@
-import express,  { type NextFunction,type Request,type Response } from 'express'
+import express, { type NextFunction, type Request, type Response } from 'express'
 import helmet from 'helmet'
 import { config } from './config'
 import userRouter from './routes/user'
@@ -22,12 +22,12 @@ app.use('/api/users', userRouter)
 
 app.use((req: Request, res: Response, _next: NextFunction) => {
   logger.info(`${req.method} - ${req.url} - ${httpStatus[404]}`)
-  res.status(httpStatus.NOT_FOUND).json({ error: httpStatus.NOT_FOUND, body: httpStatus[404] });
+  res.status(httpStatus.NOT_FOUND).json({ error: httpStatus.NOT_FOUND, body: httpStatus[404] })
 })
 
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   logger.error(err.stack)
-  res.status(httpStatus.INTERNAL_SERVER_ERROR).send("Internal Server Error");
+  res.status(httpStatus.INTERNAL_SERVER_ERROR).send('Internal Server Error')
 })
 
 app.listen(config.port, () => {

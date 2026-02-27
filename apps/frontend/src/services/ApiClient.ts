@@ -1,7 +1,5 @@
-import { API_URL, SESSION_KEY } from "../constants"
-import type { Session } from "../types"
-
-
+import { API_URL, SESSION_KEY } from '../constants'
+import type { Session } from '../types'
 
 function getSession(): Session | null {
   const raw = localStorage.getItem(SESSION_KEY)
@@ -17,16 +15,13 @@ export function clearSession() {
   localStorage.removeItem(SESSION_KEY)
 }
 
-export async function apiFetch<T>(
-  endpoint: string,
-  options: RequestInit = {}
-): Promise<T> {
+export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const session = getSession()
 
   const response = await fetch(`${API_URL}${endpoint}`, {
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...(session?.access_token && {
         Authorization: `Bearer ${session.access_token}`,
       }),
@@ -36,7 +31,7 @@ export async function apiFetch<T>(
 
   if (response.status === 401) {
     clearSession()
-    throw new Error("Session expired. Please log in again.")
+    throw new Error('Session expired. Please log in again.')
   }
 
   if (!response.ok) {

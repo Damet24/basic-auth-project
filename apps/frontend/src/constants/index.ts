@@ -1,4 +1,2 @@
-
-
-export const API_URL = "http://127.0.0.1:3000";
-export const SESSION_KEY = "session";
+export const API_URL = 'http://127.0.0.1:3000'
+export const SESSION_KEY = 'session'
