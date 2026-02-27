@@ -1,0 +1,14 @@
+import { useQuery } from '@tanstack/react-query'
+import { apiFetch } from './ApiClient'
+import type { UserInfoResponse } from '@packages/contracts/dtos/responses/UserInfoResponse'
+
+const getUserInfo = () => {
+  return useQuery<UserInfoResponse>({
+    queryKey: ['userInfo'],
+    queryFn: () => apiFetch('/api/users/me'),
+  })
+}
+
+export default {
+    getUserInfo
+}
