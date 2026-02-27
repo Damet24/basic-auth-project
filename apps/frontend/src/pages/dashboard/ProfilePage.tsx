@@ -8,8 +8,7 @@ export function ProfilePage() {
 
   return (
     <Container>
-      <h1 className="text-2xl font-bold mb-6 
-      text-gray-900 dark:text-white">
+      <h1 className="mb-6 font-bold text-2xl text-gray-900 dark:text-white">
         Profile
       </h1>
 
