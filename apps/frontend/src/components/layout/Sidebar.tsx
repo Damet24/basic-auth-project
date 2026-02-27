@@ -8,22 +8,21 @@ const navItems = [
 
 export function Sidebar() {
   return (
-    <aside className="w-64 bg-white dark:bg-gray-800 shadow-md hidden md:flex flex-col">
-      <div className="p-6 font-bold text-xl text-gray-800 dark:text-white">
+    <aside className="hidden w-64 flex-col bg-white shadow-md md:flex dark:bg-gray-800">
+      <div className="p-6 font-bold text-gray-800 text-xl dark:text-white">
         MyApp
       </div>
 
-      <nav className="flex-1 px-4 space-y-2">
+      <nav className="flex-1 space-y-2 px-4">
         {navItems.map((item) => (
           <NavLink
             key={item.path}
             to={item.path}
             className={({ isActive }) =>
-              `block px-4 py-2 rounded-lg transition 
-              ${
+              `block rounded-lg px-4 py-2 transition ${
                 isActive
                   ? "bg-blue-600 text-white"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
               }`
             }
           >
