@@ -125,8 +125,8 @@ export function UsersPage() {
               variant="danger"
               onClick={() => {
                 if (deletingUser) {
-                  // mutate here
                   setDeletingUser(null)
+                  mutate(deletingUser)
                 }
               }}
             >
