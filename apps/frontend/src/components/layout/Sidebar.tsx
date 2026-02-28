@@ -11,7 +11,7 @@ export function Sidebar() {
     dashboard?.children?.filter((route) => route.showInSidebar && (!route.permission || can(route.permission))) ?? []
 
   return (
-    <aside className="hidden w-64 flex-col bg-white shadow-md md:flex dark:bg-gray-800">
+    <aside className="w-64 flex-col bg-white shadow-md md:flex dark:bg-gray-800">
       <div className="p-6 font-bold text-gray-800 text-xl dark:text-white">MyApp</div>
 
       <nav className="flex-1 space-y-2 px-4">
