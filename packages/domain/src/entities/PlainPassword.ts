@@ -3,8 +3,8 @@ import { type Result, ok, err } from '../shared/Result'
 import { StringValueObject } from '../value-boject/StringValueObject'
 
 export class PlainPassword extends StringValueObject {
-  private static readonly MIN_LENGTH = 12
-  private static readonly MAX_LENGTH = 128
+  static readonly MIN_LENGTH = 12
+  static readonly MAX_LENGTH = 128
 
   private constructor(value: string) {
     super(value)
