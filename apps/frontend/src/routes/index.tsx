@@ -1,9 +1,9 @@
-import { createBrowserRouter } from 'react-router'
+import { createBrowserRouter, type RouteObject } from 'react-router'
 import { ProtectedRoute } from '../components/auth/ProtectedRoute'
 import type { AppRoute } from '../types'
 import { APP_ROUTES } from './routes'
 
-function mapRoutes(routes: AppRoute[]): any[] {
+function mapRoutes(routes: AppRoute[]): RouteObject[] {
   return routes.map((route) => {
     const wrappedElement = route.permission ? (
       <ProtectedRoute key={route.path} requiredPermission={route.permission}>
@@ -17,7 +17,7 @@ function mapRoutes(routes: AppRoute[]): any[] {
       path: route.path,
       element: wrappedElement,
       children: route.children ? mapRoutes(route.children) : undefined,
-    }
+    } as RouteObject
   })
 }
 
