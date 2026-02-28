@@ -41,5 +41,11 @@ export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): 
     throw new Error(errorText || `Error ${response.status}`)
   }
 
-  return response.json()
+  const contentType = response.headers.get('content-type')
+
+  if (contentType?.includes('application/json')) {
+    return response.json()
+  }
+
+  return (await response.text()) as T
 }
