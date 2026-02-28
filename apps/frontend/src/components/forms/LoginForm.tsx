@@ -25,8 +25,10 @@ export function LoginForm() {
       await mutateAsync(data)
 
       navigate('/home')
-    } catch (error: any) {
-      setError('root', { message: error.message })
+    } catch (error) {
+      if (error instanceof Error) {
+        setError('root', { message: error.message })
+      }
     }
   }
 
