@@ -7,6 +7,7 @@ export type Session = Token & {
 
 export type AuthContextType = {
   session: Session | null
+  setSession: (session: Session | null) => void
   logout: () => void
   isAuthenticated: boolean
 }

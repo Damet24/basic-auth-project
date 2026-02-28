@@ -1,10 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useAuth } from '../contexts/AuthContext'
 import { setSession } from '../services/ApiClient'
 import AuthService from '../services/AuthService'
 import UserService from '../services/UserService'
 
 export const useLogin = () => {
   const queryClient = useQueryClient()
+  const { setSession: setAuthSession } = useAuth()
 
   return useMutation({
     mutationFn: async ({ email, password }: { email: string; password: string }) => {
@@ -17,6 +19,7 @@ export const useLogin = () => {
       }
 
       setSession(session)
+      setAuthSession(session)
 
       const user = await queryClient.fetchQuery({
         queryKey: ['userInfo'],

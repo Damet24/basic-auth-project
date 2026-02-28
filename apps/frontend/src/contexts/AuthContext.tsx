@@ -19,6 +19,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return parsed
   })
 
+  const setSessionInState = useCallback((newSession: Session | null) => {
+    setSession(newSession)
+  }, [])
+
   const logout = useCallback(() => {
     setSession(null)
     localStorage.removeItem(SESSION_KEY)
@@ -29,10 +33,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo(
     () => ({
       session,
+      setSession: setSessionInState,
       logout,
       isAuthenticated,
     }),
-    [session, logout, isAuthenticated],
+    [session, setSessionInState, logout, isAuthenticated],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { authenticate } from '../src/middlewares/authenticate'
 import type { AuthenticatedRequest } from '../src/types/AuthenticatedRequest'
 import type { Response, NextFunction } from 'express'
-import { UserRole } from '@packages/domain/entities/UserRole'
+import { UserRole } from '../../../packages/domain/src/entities/UserRole'
 
 vi.mock('../src/config', () => ({
   config: {
