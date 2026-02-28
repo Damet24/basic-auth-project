@@ -1,14 +1,14 @@
 import { TableSkeleton } from './TableSkeleton'
 
-export type Column<T> = {
+export type Column<T, K extends keyof T = keyof T> = {
   header: string
-  accessor: keyof T
-  render?: (value: any, row: T) => React.ReactNode
+  accessor: K
+  render?: (value: T[K], row: T) => React.ReactNode
 }
 
 type DataTableProps<T> = {
   data: T[]
-  columns: Column<T>[]
+  columns: Column<T, any>[]
   loading?: boolean
   emptyMessage?: string
 }
