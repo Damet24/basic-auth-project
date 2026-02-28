@@ -7,6 +7,9 @@
   "license": "ISC",
   "packageManager": "pnpm@10.30.2",
   "private": true,
+  "scripts": {
+    "test:packages": "pnpm -r --filter \"./packages/*\" test"
+  },
   "devDependencies": {
     "@biomejs/biome": "^2.4.4",
     "@types/node": "^24.10.14",
