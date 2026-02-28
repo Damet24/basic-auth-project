@@ -1,5 +1,3 @@
-import { Badge } from '../../components/ui/Badge'
-
 export function DashboardPage() {
   return (
     <>
@@ -7,15 +5,11 @@ export function DashboardPage() {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         <div className="rounded-xl bg-white p-6 shadow dark:bg-gray-800">
-          <h2 className="mb-2 font-semibold text-lg">Users</h2>
-          <p className="font-bold text-3xl">120</p>
-          <Badge variant="success">+5%</Badge>
+          <h2 className="mb-2 font-semibold text-lg">Example</h2>
         </div>
 
         <div className="rounded-xl bg-white p-6 shadow dark:bg-gray-800">
-          <h2 className="mb-2 font-semibold text-lg">Active</h2>
-          <p className="font-bold text-3xl">87</p>
-          <Badge variant="default">Stable</Badge>
+          <h2 className="mb-2 font-semibold text-lg">Example</h2>
         </div>
       </div>
     </>
