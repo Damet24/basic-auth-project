@@ -43,15 +43,15 @@ export class UserService {
     })
   }
 
-  async edit(payload: UpdateUserRequest): Promise<Result<boolean, NotFoundError>> {
-    const userResult = await this.userRepository.findById(payload.id)
+  async edit(id: string, payload: UpdateUserRequest): Promise<Result<boolean, NotFoundError>> {
+    const userResult = await this.userRepository.findById(id)
 
     if (!userResult) {
       return err(new NotFoundError('User not found'))
     }
 
     const result = await this.userRepository.update(
-      payload.id,
+      id,
       Object.fromEntries(
         Object.entries({
           name: payload.name,
