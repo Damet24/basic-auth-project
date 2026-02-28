@@ -7,6 +7,7 @@ import type { UserRepository } from '../repositories/UserRepository'
 import type { LoginRequest, Token, RegisterUserRequest, RegisterUserResponse } from '@packages/contracts/index'
 import type { PasswordHasher } from './PasswordHasher'
 import { ok, err, type Result } from '@packages/domain/shared/Result'
+import { ChangePasswordRequest } from '@packages/contracts/dtos/requests/ChangePasswordRequest'
 
 export class AuthService {
   constructor(
@@ -66,6 +67,32 @@ export class AuthService {
       name: newUser.name.value,
       email: newUser.email.value,
       role: newUser.role.value,
+    })
+  }
+
+  async updatePassword({ id, payload }: { id: string; payload: ChangePasswordRequest }): Promise<Result<boolean, Error>> {
+    const user = await this.userRepository.findById(id)
+    if (!user) return err(new Error('Invalid credentials'))
+
+    if (payload.newPassword !== payload.confirmPassword) return err(new Error('Invald password'))
+
+    const isPasswordValid = await this.passswordHasher.compare(payload.currentPassword, user.passwordHash.value)
+    if (!isPasswordValid) return err(new Error('Invalid credentials'))
+
+    const plainPassword = PlainPassword.create(payload.newPassword)
+    if (plainPassword.isErr()) return err(plainPassword.error)
+
+    const hashed = await this.passswordHasher.hash(plainPassword.value.value)
+    const passwordHash = new PasswordHash(hashed)
+
+    const result = await this.userRepository.updatePassword(id, passwordHash.value)
+    return result.match({
+      ok(value) {
+        return ok(value)
+      },
+      err(error) {
+        return err(error)
+      },
     })
   }
 }

@@ -3,6 +3,8 @@ import { RegisterUserRequestSchema } from '@packages/contracts/index'
 import type { Request, Response } from 'express'
 import httpStatus from 'http-status'
 import { authService } from '../di'
+import type { AuthenticatedRequest } from '../types/AuthenticatedRequest'
+import { ChangePasswordSchema } from '@packages/contracts/dtos/requests/ChangePasswordRequest'
 
 export class AuthController {
   async login(req: Request, res: Response) {
@@ -40,6 +42,25 @@ export class AuthController {
       },
       err(error) {
         return res.status(httpStatus.BAD_REQUEST).json(error.message)
+      },
+    })
+  }
+
+  async updatePassword(req: AuthenticatedRequest, res: Response) {
+    if (!req.user) {
+      return res.status(httpStatus.BAD_REQUEST).json({ error: 'User not authenticated' })
+    }
+
+    const parsed = ChangePasswordSchema.safeParse(req.body)
+    if (!parsed.success) { 
+      return res.status(httpStatus.BAD_REQUEST).json({ error: parsed.error.message })
+    }
+
+    const result = await authService.updatePassword({id: req.user.userId, payload: parsed.data})
+     result.match({
+      ok: () => res.status(httpStatus.OK).send('User deleted'),
+      err(error) {
+        return res.status(httpStatus.BAD_REQUEST).send(error.message)
       },
     })
   }
